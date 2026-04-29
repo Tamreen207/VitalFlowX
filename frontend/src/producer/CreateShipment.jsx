@@ -8,28 +8,60 @@ const CreateShipment = () => {
   const [qty, setQty] = useState('');
   const [step, setStep] = useState(1);
   const [qrPayload, setQrPayload] = useState(null);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [productError, setProductError] = useState('');
+  const [qtyError, setQtyError] = useState('');
 
-  const handleGenerate = async () => {
-    if (!product || !qty) return;
-    setIsSubmitting(true);
-    const token = TokenGenerator.generateTrackingToken(product, 'OriginHub');
-    const payload = TokenGenerator.generateQRPayload(token, { product, qty });
-    setQrPayload(payload);
-    
-    // Commit to backend blockchain
-    await ledger.addTransaction({
-      action: 'SHIPMENT_CREATED',
-      token,
-      product,
-      qty,
-      producer: 'Producer Admin'
-    });
-    
-    setIsSubmitting(false);
-    setStep(2);
+  // Validation: Product identifier - alphanumeric, hyphens, underscores, spaces only (min 2 chars)
+  const validateProduct = (value) => {
+    if (!value.trim()) {
+      return 'Product identifier is required';
+    }
+    if (value.length < 2) {
+      return 'Product identifier must be at least 2 characters';
+    }
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9\s_-]*$/.test(value)) {
+      return 'Only letters, numbers, spaces, hyphens, and underscores allowed';
+    }
+    return '';
   };
+
+  // Validation: Quantity - positive integer only
+  const validateQuantity = (value) => {
+    if (!value) {
+      return 'Quantity is required';
+    }
+    if (!/^\d+$/.test(value)) {
+      return 'Only positive numbers allowed';
+    }
+    const num = parseInt(value, 10);
+    if (num <= 0) {
+      return 'Quantity must be greater than 0';
+    }
+    if (num > 999999) {
+      return 'Quantity exceeds maximum limit';
+    }
+    return '';
+  };
+
+  const handleProductChange = (e) => {
+    const value = e.target.value;
+    setProduct(value);
+    setProductError(value ? validateProduct(value) : '');
+  };
+
+  const handleQtyChange = (e) => {
+    const value = e.target.value;
+    // Only allow digits
+    if (value && !/^\d+$/.test(value)) {
+      setQtyError('Only numbers allowed');
+      return;
+    }
+    setQty(value);
+    setQtyError(value ? validateQuantity(value) : '');
+  };
+
+  const isValid = !productError && !qtyError && product.trim() && qty.trim();
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in-up">
@@ -46,21 +78,73 @@ const CreateShipment = () => {
         <div className="p-8 md:p-12 space-y-8">
            {step === 1 ? (
              <>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div className="space-y-3">
-                   <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Product Identifier</label>
-                   <input type="text" value={product} onChange={e => setProduct(e.target.value)} placeholder="e.g. mRNA-1273 Batch X" className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 transition-all outline-none bg-slate-50 text-slate-800 font-medium font-mono" />
-                 </div>
-                 <div className="space-y-3">
-                   <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Quantity (Units)</label>
-                   <input type="number" value={qty} onChange={e => setQty(e.target.value)} placeholder="5000" className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 transition-all outline-none bg-slate-50 text-slate-800 font-medium font-mono" />
-                 </div>
-               </div>
-               <div className="pt-8 border-t border-slate-100 flex justify-end gap-4 mt-12">
-                  <button onClick={handleGenerate} disabled={isSubmitting} className={`px-8 py-4 rounded-xl text-white font-black tracking-wide transition-all duration-300 ${isSubmitting ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-indigo-800 hover:shadow-xl hover:shadow-indigo-600/30 hover:-translate-y-1'}`}>
-                    {isSubmitting ? 'Submitting to Blockchain...' : 'Generate Token & Blockchain TX \u2192'}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                      Product Identifier
+                      <span className="text-red-500 ml-1">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={product}
+                      onChange={handleProductChange}
+                      placeholder="e.g. mRNA-1273 Batch X"
+                      className={`w-full px-5 py-4 rounded-xl border transition-all outline-none bg-slate-50 font-medium font-mono ${
+                        productError
+                          ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
+                          : 'border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100'
+                      }`}
+                    />
+                    {productError && (
+                      <p className="text-red-600 text-sm font-medium flex items-center gap-1 mt-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                        </svg>
+                        {productError}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-widest">
+                      Quantity (Units)
+                      <span className="text-red-500 ml-1">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={qty}
+                      onChange={handleQtyChange}
+                      placeholder="5000"
+                      className={`w-full px-5 py-4 rounded-xl border transition-all outline-none bg-slate-50 font-medium font-mono ${
+                        qtyError
+                          ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
+                          : 'border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100'
+                      }`}
+                    />
+                    {qtyError && (
+                      <p className="text-red-600 text-sm font-medium flex items-center gap-1 mt-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                        </svg>
+                        {qtyError}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="pt-8 border-t border-slate-100 flex justify-end gap-4 mt-12">
+                  <button 
+                    onClick={handleGenerate} 
+                    disabled={!isValid || isSubmitting}
+                    className={`px-8 py-4 rounded-xl text-white font-black tracking-wide transition-all duration-300 ${
+                      !isValid || isSubmitting
+                        ? 'bg-slate-300 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-indigo-600 to-indigo-800 hover:shadow-xl hover:shadow-indigo-600/30 hover:-translate-y-1 active:translate-y-0'
+                    }`}
+                  >
+                    {isSubmitting ? 'Submitting to Blockchain...' : 'Generate Token & Blockchain TX →'}
                   </button>
-               </div>
+                </div>
              </>
            ) : (
              <div className="flex flex-col items-center justify-center space-y-6">

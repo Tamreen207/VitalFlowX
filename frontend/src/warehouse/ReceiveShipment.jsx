@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PackageOpen, QrCode, ShieldCheck, ThermometerSnowflake, User, MapPin, Database, Send, Plus, CheckCircle2 } from 'lucide-react';
 
 const ReceiveShipment = () => {
+<<<<<<< Updated upstream
   const [isProcessing, setIsProcessing] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -19,6 +20,11 @@ const ReceiveShipment = () => {
       setStep(4);
     }, 2000);
   };
+=======
+  const [searchTerm, setSearchTerm] = useState('');
+  const mockData = Array(5).fill(0).map((_,i) => ({id: 'Sample ' + i, shipmentId: 'Sample ' + i, product: 'Sample ' + i, zone: 'Sample ' + i, qty: 'Sample ' + i, tempOnArrival: 'Sample ' + i, status: 'Sample ' + i}));
+  const filteredData = mockData.filter(row => Object.values(row).some(val => String(val).toLowerCase().includes(searchTerm.toLowerCase())));
+>>>>>>> Stashed changes
 
   return (
     <div className="space-y-8 animate-fade-in-up pb-12">

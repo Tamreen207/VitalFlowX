@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import React from 'react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Activity, ThermometerSnowflake, Droplets, AlertTriangle, Battery, Signal, Zap } from 'lucide-react';
 
 const mockSensorData = [

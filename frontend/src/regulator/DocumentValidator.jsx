@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FileText, ShieldCheck, AlertTriangle, Upload, CheckCircle2, XCircle, Search, RefreshCw } from 'lucide-react';
 
 const mockDocuments = [
-  { id: 'DOC-001', name: 'Origin Certificate VTX-992A.pdf', uploader: 'Producer Admin', date: '2026-04-28', hash: '0x3f8a9e...1b2c', status: 'VERIFIED' },
+  { id: 'DOC-001', name: 'Origin Certificate 102.pdf', uploader: 'Producer Admin', date: '2026-04-28', hash: '0x3f8a9e...1b2c', status: 'VERIFIED' },
   { id: 'DOC-002', name: 'Customs Invoice TR-55B.pdf', uploader: 'Transporter Lead', date: '2026-04-29', hash: '0x991bce...4d5f', status: 'VERIFIED' },
   { id: 'DOC-003', name: 'QA Inspection Report.pdf', uploader: 'Warehouse QA', date: '2026-04-29', hash: '0x1a2b3c...4d5e', status: 'TAMPERED' },
   { id: 'DOC-004', name: 'Vaccine Batch Details.csv', uploader: 'Producer Admin', date: '2026-04-28', hash: '0x5f6a7b...8c9d', status: 'VERIFIED' },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Truck, ArrowRight, UserPlus, ShieldCheck, MapPin, Search } from 'lucide-react';
+import { ArrowRight, UserPlus, ShieldCheck, MapPin, Search } from 'lucide-react';
 
 const HandoffEvent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +47,7 @@ const HandoffEvent = () => {
                 <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Shipment ID</label>
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input type="text" required placeholder="VTX-8821B" className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" />
+                  <input type="text" required placeholder="e.g., 102" className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" />
                 </div>
               </div>
               <div className="space-y-2">

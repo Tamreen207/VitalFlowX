@@ -21,7 +21,19 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
 
+<<<<<<< Updated upstream
   componentDidCatch(_error, _errorInfo) {
+=======
+  componentDidCatch(_error, errorInfo) {
+    this.setState(prevState => ({
+      error: _error,
+      errorInfo,
+      errorCount: prevState.errorCount + 1,
+    }));
+  }
+
+  componentDidCatch(error, errorInfo) {
+>>>>>>> Stashed changes
     this.setState(prevState => ({
       error: _error,
       errorInfo: _errorInfo,

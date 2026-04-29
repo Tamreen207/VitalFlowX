@@ -1,14 +1,7 @@
 import { useState } from 'react';
 
 const SecureAccess = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setSuccess(true); e.target.reset(); }, 1500);
-  };
   const mockData = Array(5).fill(0).map((_,i) => ({id: 'Sample ' + i, person: 'Sample ' + i, role: 'Sample ' + i, zone: 'Sample ' + i, action: 'Sample ' + i, method: 'Sample ' + i, timestamp: 'Sample ' + i}));
   const filteredData = mockData.filter(row => Object.values(row).some(val => String(val).toLowerCase().includes(searchTerm.toLowerCase())));
 

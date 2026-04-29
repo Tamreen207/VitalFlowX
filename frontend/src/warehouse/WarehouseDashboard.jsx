@@ -2,6 +2,7 @@ import React from 'react';
 import { Warehouse, Package, Activity, AlertTriangle, Truck, ShieldCheck, ThermometerSnowflake, TrendingUp } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
+<<<<<<< Updated upstream
 const tempLogs = [
   { time: '00:00', temp: -72 }, { time: '04:00', temp: -71 },
   { time: '08:00', temp: -70 }, { time: '12:00', temp: -73 },
@@ -12,6 +13,9 @@ const SLAComplianceData = [
   { name: 'Node 1', score: 98 }, { name: 'Node 2', score: 85 },
   { name: 'Node 3', score: 100 }, { name: 'Node 4', score: 92 },
 ];
+=======
+const WarehouseDashboard = () => {
+>>>>>>> Stashed changes
 
 const WarehouseDashboard = () => {
   return (

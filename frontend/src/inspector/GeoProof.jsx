@@ -74,7 +74,6 @@ const GeoProof = () => {
           <h3 className="font-bold text-slate-800 flex items-center gap-2"><MapPin className="w-4 h-4" /> Checkpoints</h3>
           {checkpoints.map((cp, i) => {
             const cfg = statusConfig[cp.status];
-            const Icon = cfg.icon;
             return (
               <div
                 key={i}

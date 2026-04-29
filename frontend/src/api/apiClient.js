@@ -163,7 +163,11 @@ class APIClient {
 
       this.clearTokens();
       return false;
+<<<<<<< Updated upstream
     } catch (_error) {
+=======
+    } catch {
+>>>>>>> Stashed changes
       this.clearTokens();
       return false;
     }

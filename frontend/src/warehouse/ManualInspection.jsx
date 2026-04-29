@@ -1,14 +1,7 @@
 import { useState } from 'react';
 
 const ManualInspection = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setSuccess(true); e.target.reset(); }, 1500);
-  };
   const mockData = Array(5).fill(0).map((_,i) => ({id: 'Sample ' + i, zone: 'Sample ' + i, inspector: 'Sample ' + i, date: 'Sample ' + i, findings: 'Sample ' + i, result: 'Sample ' + i}));
   const filteredData = mockData.filter(row => Object.values(row).some(val => String(val).toLowerCase().includes(searchTerm.toLowerCase())));
 

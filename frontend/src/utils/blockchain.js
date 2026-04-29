@@ -1,5 +1,8 @@
+import CryptoJS from 'crypto-js';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+<<<<<<< Updated upstream
 class Blockchain {
   constructor() {
     this.chain = [this.createGenesisBlock()];
@@ -27,6 +30,33 @@ class Blockchain {
       data,
       hash: this.calculateHash(index, previousHash, timestamp, data),
     };
+=======
+// Local Blockchain implementation for testing and offline operations
+export class Blockchain {
+  constructor() {
+    this.chain = [];
+    this.pendingTransactions = [];
+    this.difficulty = 4;
+  }
+
+  createGenesisBlock() {
+    const block = {
+      index: 0,
+      timestamp: Date.now(),
+      data: 'Genesis Block',
+      previousHash: '0',
+      nonce: 0,
+    };
+    block.hash = this.calculateHash(block);
+    return block;
+  }
+
+  calculateHash(block) {
+    // Exclude the hash field itself when computing the hash
+    const { hash, ...rest } = block;
+    const blockString = JSON.stringify(rest);
+    return CryptoJS.SHA256(blockString).toString(CryptoJS.enc.Hex);
+>>>>>>> Stashed changes
   }
 
   getLatestBlock() {
@@ -34,6 +64,7 @@ class Blockchain {
   }
 
   addTransaction(data) {
+<<<<<<< Updated upstream
     const previousBlock = this.getLatestBlock();
     const index = this.chain.length;
     const timestamp = Date.now();
@@ -54,6 +85,26 @@ class Blockchain {
       const previousBlock = this.chain[index - 1];
 
       if (currentBlock.hash !== this.calculateHash(currentBlock.index, currentBlock.previousHash, currentBlock.timestamp, currentBlock.data)) {
+=======
+    const newBlock = {
+      index: this.chain.length,
+      timestamp: Date.now(),
+      data: data,
+      previousHash: this.chain.length ? this.getLatestBlock().hash : '0',
+      nonce: 0,
+    };
+    newBlock.hash = this.calculateHash(newBlock);
+    this.chain.push(newBlock);
+    return newBlock;
+  }
+
+  isChainValid() {
+    for (let i = 1; i < this.chain.length; i++) {
+      const currentBlock = this.chain[i];
+      const previousBlock = this.chain[i - 1];
+
+      if (currentBlock.hash !== this.calculateHash(currentBlock)) {
+>>>>>>> Stashed changes
         return false;
       }
 
@@ -61,7 +112,10 @@ class Blockchain {
         return false;
       }
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     return true;
   }
 }
@@ -69,6 +123,8 @@ class Blockchain {
 class BlockchainClient {
   constructor() {
     this.chain = [];
+    this.localBlockchain = new Blockchain();
+    this.localBlockchain.chain = [this.localBlockchain.createGenesisBlock()];
   }
 
   async getChain() {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertCircle, FileWarning, Camera, Send, ShieldAlert } from 'lucide-react';
+import { Camera, Send, ShieldAlert } from 'lucide-react';
 
 const IncidentReport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

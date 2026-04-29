@@ -11,11 +11,20 @@ const ChecklistEngine = () => {
   ]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+<<<<<<< Updated upstream
 
   const toggleStatus = (id) => {
     setItems(items.map(item => 
       item.id === id ? { ...item, status: item.status === 'complete' ? 'pending' : 'complete' } : item
     ));
+=======
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => { setIsSubmitting(false); setSuccess(true); e.target.reset(); }, 1500);
+>>>>>>> Stashed changes
   };
 
   const handleFinalize = () => {

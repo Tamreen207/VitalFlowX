@@ -1,8 +1,4 @@
-
-import { coldReadings, storageZones } from './dummyData';
-
 const ColdMonitoring = () => {
-
   return (
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex items-center justify-between">

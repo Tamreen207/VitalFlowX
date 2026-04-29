@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { ledger } from '../utils/blockchain';
+<<<<<<< Updated upstream
 import { ShieldCheck, Activity, MapPin, FileText, AlertTriangle, Search, Anchor } from 'lucide-react';
+=======
+import { ShieldCheck, Activity, MapPin, Truck, Warehouse, Store, AlertTriangle, FileText, CheckCircle2, Search, Anchor } from 'lucide-react';
+>>>>>>> Stashed changes
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const mockSensorData = [
@@ -34,10 +38,17 @@ const ScanShipment = () => {
           setScanResult({ error: 'No shipment found on ledger' });
         }, 1500);
       }
+<<<<<<< Updated upstream
     } catch (_error) {
       setIsScanning(false);
       setScanResult({ error: 'Failed to connect to blockchain network' });
     }
+=======
+       } catch {
+         setIsScanning(false);
+         setScanResult({ error: 'Failed to connect to blockchain network' });
+       }
+>>>>>>> Stashed changes
   };
 
   return (

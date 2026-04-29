@@ -3,7 +3,7 @@ import { useState } from 'react';
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);

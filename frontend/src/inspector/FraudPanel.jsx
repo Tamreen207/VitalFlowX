@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import { ShieldAlert, AlertTriangle, Fingerprint, ShieldCheck, Search, Activity, Gauge, ExternalLink, Filter } from 'lucide-react';
 
 const FraudPanel = () => {
+<<<<<<< Updated upstream
   const [activeTab, setActiveTab] = useState('Anomalies');
+=======
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => { setIsSubmitting(false); setSuccess(true); e.target.reset(); }, 1500);
+  };
+>>>>>>> Stashed changes
 
   const alerts = [
     { id: 'FR-991', type: 'Signature Mismatch', actor: 'Actor_0x221', severity: 'High', trustImpact: -15, status: 'Flagged', time: '10 mins ago' },

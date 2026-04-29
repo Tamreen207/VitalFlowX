@@ -51,6 +51,10 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  @keyframes dash {
+    0% { stroke-dasharray: 0, 100; }
+    100% { stroke-dasharray: 98, 100; }
+  }
   @keyframes bounce-gentle {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
@@ -89,6 +93,12 @@
   }
   .animate-spin-slow {
     animation: spin-slow 8s linear infinite;
+  }
+  .animate-dash {
+    animation: dash 2s ease-out forwards;
+  }
+  .animate-bounce-gentle {
+    animation: bounce-gentle 3s ease-in-out infinite;
   }
   .animate-scale-in {
     animation: scale-in 0.4s ease-out forwards;
