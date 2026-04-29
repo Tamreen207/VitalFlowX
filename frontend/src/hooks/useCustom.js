@@ -216,19 +216,7 @@ export function useDebounce(value, delay = 500) {
   return debouncedValue;
 }
 
-<<<<<<< Updated upstream
-=======
 /**
  * usePrevious Hook - Track previous value
  */
-export function usePrevious(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  // eslint-disable-next-line react-hooks/refs
-  return ref.current;
-}
->>>>>>> Stashed changes
+// Note: `usePrevious` removed — not used in the codebase to avoid lint rules

@@ -63,6 +63,35 @@ const CreateShipment = () => {
 
   const isValid = !productError && !qtyError && product.trim() && qty.trim();
 
+  const handleGenerate = async () => {
+    setProductError('');
+    setQtyError('');
+    if (!isValid) return;
+    setIsSubmitting(true);
+    try {
+      // generate token (synchronous or async depending on implementation)
+      const token = TokenGenerator.generate({ product, qty });
+      const payload = JSON.stringify({ token, product, qty, createdAt: new Date().toISOString() });
+
+      // attempt to submit to ledger (will fallback locally if API is unavailable)
+      if (ledger && ledger.addTransaction) {
+        try {
+          await ledger.addTransaction({ token, product, qty });
+        } catch (_err) {
+          // ignore ledger submission errors - fall back to QR payload only
+        }
+      }
+
+      setQrPayload(payload);
+      setStep(2);
+    } catch (err) {
+      console.error('Failed to generate shipment token', err);
+      setProductError('Failed to generate token. Try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in-up">
       <div>

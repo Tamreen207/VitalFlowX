@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useState, useRef } from 'react';
-import { CheckCircle2, ShieldCheck, ClipboardCheck, User, MapPin, Package, PenTool, Map as MapIcon, Send } from 'lucide-react';
-=======
 import React, { useState } from 'react';
-import { CheckCircle2, ShieldCheck, ClipboardCheck, User, Package } from 'lucide-react';
->>>>>>> Stashed changes
+import { CheckCircle2, ShieldCheck, ClipboardCheck, User, MapPin, Package, PenTool, Map as MapIcon, Send } from 'lucide-react';
 
 const DeliveryConfirm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,13 +83,8 @@ const DeliveryConfirm = () => {
                   required 
                   value={formData.shipment_id}
                   onChange={handleChange}
-<<<<<<< Updated upstream
                   placeholder="VTX-XXXX" 
                   className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all font-bold text-slate-700" 
-=======
-                  placeholder="e.g., 102" 
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" 
->>>>>>> Stashed changes
                 />
               </div>
               <div className="space-y-2">

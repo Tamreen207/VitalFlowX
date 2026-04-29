@@ -2,18 +2,12 @@ import React from 'react';
 import { History, Search, Filter, ArrowUpRight, Download, Box, ShieldCheck, MapPin, Truck, Warehouse, CheckCircle2 } from 'lucide-react';
 
 const ShipmentHistory = () => {
-<<<<<<< Updated upstream
   const history = [
     { id: 'VTX-001', product: 'Bio-Vial Gamma', status: 'Delivered', trust: 99.8, lastEvent: 'Customer Receipt', time: '2h ago' },
     { id: 'VTX-002', product: 'Cryo-Pack 44', status: 'In Transit', trust: 94.2, lastEvent: 'Regional Hub D', time: '5h ago' },
     { id: 'VTX-003', product: 'Plasma Supply', status: 'Delivered', trust: 100, lastEvent: 'Hospital Storage', time: 'Yesterday' },
     { id: 'VTX-004', product: 'Vaccine Batch B', status: 'Flagged', trust: 42.0, lastEvent: 'Temp Deviation @ Port', time: '2 days ago' },
   ];
-=======
-  const [searchTerm, setSearchTerm] = useState('');
-  const mockData = Array(5).fill(0).map((_,i) => ({id: 'Sample ' + i, product: 'Sample ' + i, origin: 'Sample ' + i, expectedFormat: 'Sample ' + i, status: 'Sample ' + i, eta: 'Sample ' + i}));
-  const filteredData = mockData.filter(row => Object.values(row).some(val => String(val).toLowerCase().includes(searchTerm.toLowerCase())));
->>>>>>> Stashed changes
 
   return (
     <div className="space-y-8 animate-fade-in-up pb-12">

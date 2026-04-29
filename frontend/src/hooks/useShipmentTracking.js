@@ -5,7 +5,7 @@ import WarehouseService from '../warehouse/WarehouseService';
 import RetailerService from '../retailer/RetailerService';
 
 export const useShipmentTracking = (shipmentId, _role = 'transporter') => {
-  const { fetchShipment, error: _contextError } = useShipments();
+  const { fetchShipment, getShipmentTracking } = useShipments();
   const [shipmentData, setShipmentData] = useState(null);
   const [_trackingData, _setTrackingData] = useState(null);
   const [sensorData, setSensorData] = useState([]);
@@ -34,12 +34,23 @@ export const useShipmentTracking = (shipmentId, _role = 'transporter') => {
         sensors = await WarehouseService.getZoneSensorData(data?.id);
       } else if (role === 'retailer') {
         data = await RetailerService.scanShipment(shipmentId);
-        sensors = await fetchShipment(shipmentId);
+        // Retailer doesn't expose raw sensor list; request compliance/report instead
+        const compliance = await RetailerService.getComplianceReport(shipmentId);
+        sensors = compliance?.readings || [];
       }
 
       if (data) {
         setShipmentData(data);
         setSensorData(sensors || []);
+
+        // Load live tracking snapshot from context
+        try {
+          const live = getShipmentTracking ? getShipmentTracking(shipmentId) : null;
+          _setTrackingData(live || null);
+        } catch (e) {
+           
+          console.error('Failed to read live tracking from context', e);
+        }
 
         // Calculate ETA if we have origin and destination
         if (data.origin && data.destination && role === 'transporter') {
@@ -58,7 +69,7 @@ export const useShipmentTracking = (shipmentId, _role = 'transporter') => {
     } finally {
       setLoading(false);
     }
-  }, [shipmentId, fetchShipment]);
+  }, [shipmentId, fetchShipment, getShipmentTracking]);
 
   // Load initial data
   useEffect(() => {
