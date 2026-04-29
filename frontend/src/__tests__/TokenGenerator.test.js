@@ -5,8 +5,9 @@ describe('TokenGenerator', () => {
   it('should generate a valid tracking token format', () => {
     const token = TokenGenerator.generateTrackingToken('Vaccine', 'NYC');
     expect(token).toBeDefined();
-    expect(token.startsWith('VTX-')).toBe(true);
-    expect(token.length).toBe(20); // VTX- + 16 chars
+    // Now tokens are 3-digit numeric codes
+    expect(/^[0-9]{3}$/.test(token)).toBe(true);
+    expect(token.length).toBe(3);
   });
 
   it('should generate unique tokens for identical inputs due to uuid and timestamp', () => {
@@ -16,7 +17,7 @@ describe('TokenGenerator', () => {
   });
 
   it('should generate a valid JSON payload for QR code', () => {
-    const token = 'VTX-1234567890ABCDEF';
+    const token = '102';
     const payload = TokenGenerator.generateQRPayload(token, { temp: -70 });
     
     expect(() => JSON.parse(payload)).not.toThrow();
